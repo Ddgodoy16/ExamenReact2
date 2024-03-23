@@ -124,10 +124,17 @@ export const Categorias = () => {
     };
 
     return (
-        <div className="container mt-5">
-            <h2>Lista de Categorías</h2>
-            <button onClick={() => abrirModal(1)} className="btn btn-dark btn-sm btn-block" data-bs-toggle='modal' data-bs-target='#modalCategoria' > <i className='fa-solid fa-circle-plus' />  Agregar Categoría</button>
-            <table className="table">
+        <div className="container-fluid mt-5 justify-content-center">
+        <div className="mt-5 mb-5 d-flex justify-content-center">
+    <div>
+        <h2>Lista de Categorías</h2>
+        <button onClick={() => abrirModal(1)} className="btn btn-dark btn-sm btn-block" data-bs-toggle='modal' data-bs-target='#modalCategoria'>
+            <i className='fa-solid fa-circle-plus' /> Agregar Categoría
+        </button>
+    </div>
+</div>
+           
+              <table className="table">
                 <thead>
                     <tr>
                         <th>#</th>

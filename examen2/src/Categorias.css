@@ -8,6 +8,10 @@ height: 80px;
 
 }
 
+h2 {
+    text-align: center;
+
+  }
 .table {
     width: 100%;
     border-collapse: collapse;
@@ -25,6 +29,7 @@ height: 80px;
 .table th {
     background-color: #f2f2f2;
 }
+
 
 .table tbody tr:nth-child(even) {
     background-color: #f2f2f2;
