@@ -1,0 +1,32 @@
+.categoria-container {
+    margin-top: 20px;
+    text-align: center;
+}
+.image{
+width: 80px;
+height: 80px;
+
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table th,
+.table td {
+    padding: 8px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+    border-right: 1px black;
+    
+}
+
+.table th {
+    background-color: #f2f2f2;
+}
+
+.table tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+

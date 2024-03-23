@@ -3,14 +3,17 @@ import axios from 'axios';
 import { alertaSuccess, alertaError, alertaWarning } from '../functions';
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
+import '../Categorias.css';
+
 
 export const Categorias = () => {
     const apiUrl = 'https://api.escuelajs.co/api/v1/categories';
     const [categorias, setCategorias] = useState([]);
     const [id, setId] = useState('');
-    const [nombreCategoria, setNombreCategoria] = useState('');
-    const [imageCategoria, setImageCategoria] = useState('');
-    const [operacion, setOperacion] = useState(1); // 1 para agregar, 2 para editar
+    const [nombre, setNombre] = useState('');
+    const [image, setImage] = useState('');
+    const [operacion, setOperacion] = useState(1); 
+    const [titleModal, setTitleModal] = useState('');
 
     useEffect(() => {
         obtenerCategorias();
@@ -26,12 +29,22 @@ export const Categorias = () => {
         }
     };
 
-    const abrirModal = (operacion, id = '', nombre = '', image = '') => {
+    const abrirModal = (operacion, id, nombre, image) => {
         setId(id);
-        setNombreCategoria(nombre);
-        setImageCategoria(image);
-        setOperacion(operacion);
+        setNombre(nombre);
+        setImage(image);
+        
+  
+        if (operacion === 1) {
+            setTitleModal('Registrar Categoria');
+            setOperacion(1);
+        } else if (operacion === 2) {
+            setTitleModal('Editar Categoria');
+            setOperacion(2);
+        }
     };
+
+
 
     const enviarSolicitud = async (url, metodo, parametros) => {
         let obj = {
@@ -66,14 +79,14 @@ export const Categorias = () => {
         let payload;
         let metodo;
         let urlAxios;
-        if (!nombreCategoria.trim() || !imageCategoria.trim()) {
+        if (!nombre.trim() || !image.trim()) {
             alertaWarning('Por favor, complete todos los campos');
             return;
         }
 
         payload = {
-            name: nombreCategoria,
-            image: imageCategoria
+            name: nombre,
+            image: image
           
         };
 
@@ -113,7 +126,7 @@ export const Categorias = () => {
     return (
         <div className="container mt-5">
             <h2>Lista de Categorías</h2>
-            <button onClick={() => abrirModal(1)} className="btn btn-dark btn-sm mb-3" data-bs-toggle='modal' data-bs-target='#modalProducts'>Agregar Categoría</button>
+            <button onClick={() => abrirModal(1)} className="btn btn-dark btn-sm btn-block" data-bs-toggle='modal' data-bs-target='#modalCategoria' > <i className='fa-solid fa-circle-plus' />  Agregar Categoría</button>
             <table className="table">
                 <thead>
                     <tr>
@@ -128,9 +141,9 @@ export const Categorias = () => {
                         <tr key={categoria.id}>
                             <td>{index + 1}</td>
                             <td>{categoria.name}</td>
-                            <td>{categoria.image}</td>
+                            <td><img src={categoria.image} alt='imager' className='image' /></td> 
                             <td>
-                                <button onClick={() => abrirModal(2, categoria.id, categoria.name, categoria.image)} className="btn btn-warning btn-sm me-2">Editar</button>
+                                <button onClick={() => abrirModal(2, categoria.id, categoria.name, categoria.image)} className="btn btn-warning btn-sm me-2"  data-bs-toggle='modal' data-bs-target='#modalCategoria'>Editar</button>
                                 <button onClick={() => eliminarCategoria(categoria.id)} className="btn btn-danger btn-sm">Eliminar</button>
                             </td>
                         </tr>
@@ -138,22 +151,22 @@ export const Categorias = () => {
                 </tbody>
             </table>
 
-            {/* Modal para agregar/editar categoría */}
+           
             <div id="modalCategoria" className="modal fade" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h5 className="modal-title">{operacion === 1 ? 'Agregar Categoría' : 'Editar Categoría'}</h5>
-                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <h5 className="modal-title">{titleModal}</h5>
+                            <button id='btnCerrarModal' type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div className="modal-body">
                                 <div className="mb-3">
                                     <label htmlFor="nombreCategoria" className="form-label">Nombre</label>
-                                    <input type="text" className="form-control" id="nombreCategoria" value={nombreCategoria} onChange={(e) => setNombreCategoria(e.target.value)} />
+                                    <input type="text" className="form-control" id="nombreCategoria" value={nombre} onChange={(e) => setNombre(e.target.value)} />
                                 </div>
                                 <div className="mb-3">
                                     <label htmlFor="imageCategoria" className="form-label">Imagen</label>
-                                    <input type="text" className="form-control" id="imageCategoria" value={imageCategoria} onChange={(e) => setImageCategoria(e.target.value)} />
+                                    <input type="text" className="form-control" id="imageCategoria" value={image} onChange={(e) => setImage(e.target.value)} />
                                 </div>
                             </div>
                             <div className="modal-footer">
