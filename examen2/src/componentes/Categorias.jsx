@@ -12,7 +12,7 @@ export const Categorias = () => {
     const [id, setId] = useState('');
     const [nombre, setNombre] = useState('');
     const [image, setImage] = useState('');
-    const [operacion, setOperacion] = useState(1); 
+    const [operacion, setOperacion] = useState(1);
     const [titleModal, setTitleModal] = useState('');
 
     useEffect(() => {
@@ -33,8 +33,8 @@ export const Categorias = () => {
         setId(id);
         setNombre(nombre);
         setImage(image);
-        
-  
+
+
         if (operacion === 1) {
             setTitleModal('Registrar Categoria');
             setOperacion(1);
@@ -52,11 +52,11 @@ export const Categorias = () => {
             url: url,
             data: parametros,
             headers: {
-                "Content-Type":"application/json",
-                "Accept":"application/json"
+                "Content-Type": "application/json",
+                "Accept": "application/json"
             }
         };
-        await axios(obj).then( () => {
+        await axios(obj).then(() => {
             let mensaje;
             if (metodo === 'POST') {
                 mensaje = 'Se agregó la categoría';
@@ -87,16 +87,16 @@ export const Categorias = () => {
         payload = {
             name: nombre,
             image: image
-          
+
         };
 
-      
+
         if (operacion === 1) {
             metodo = 'POST';
-           urlAxios = 'https://api.escuelajs.co/api/v1/categories/';
+            urlAxios = 'https://api.escuelajs.co/api/v1/categories/';
         } else {
             metodo = 'PUT';
-         urlAxios = `https://api.escuelajs.co/api/v1/categories/${id}`;
+            urlAxios = `https://api.escuelajs.co/api/v1/categories/${id}`;
         }
 
         enviarSolicitud(urlAxios, metodo, payload);
@@ -125,16 +125,16 @@ export const Categorias = () => {
 
     return (
         <div className="container-fluid mt-5 justify-content-center">
-        <div className="mt-5 mb-5 d-flex justify-content-center">
-    <div>
-        <h2>Lista de Categorías</h2>
-        <button onClick={() => abrirModal(1)} className="btn btn-dark btn-sm btn-block" data-bs-toggle='modal' data-bs-target='#modalCategoria'>
-            <i className='fa-solid fa-circle-plus' /> Agregar Categoría
-        </button>
-    </div>
-</div>
-           
-              <table className="table">
+            <div className="mt-5 mb-5 d-flex justify-content-center">
+                <div>
+                    <h2>Lista de Categorías</h2>
+                    <button onClick={() => abrirModal(1)} className="btn btn-success" data-bs-toggle='modal' data-bs-target='#modalCategoria'>
+                        <i className='fa-solid fa-circle-plus' /> Agregar Categoría
+                    </button>
+                </div>
+            </div>
+
+            <table className="table">
                 <thead>
                     <tr>
                         <th>#</th>
@@ -148,9 +148,9 @@ export const Categorias = () => {
                         <tr key={categoria.id}>
                             <td>{index + 1}</td>
                             <td>{categoria.name}</td>
-                            <td><img src={categoria.image} alt='imager' className='image' /></td> 
+                            <td><img src={categoria.image} alt='imager' className='image' /></td>
                             <td>
-                                <button onClick={() => abrirModal(2, categoria.id, categoria.name, categoria.image)} className="btn btn-warning btn-sm me-2"  data-bs-toggle='modal' data-bs-target='#modalCategoria'>Editar</button>
+                                <button onClick={() => abrirModal(2, categoria.id, categoria.name, categoria.image)} className="btn btn-warning btn-sm me-2" data-bs-toggle='modal' data-bs-target='#modalCategoria'>Editar</button>
                                 <button onClick={() => eliminarCategoria(categoria.id)} className="btn btn-danger btn-sm">Eliminar</button>
                             </td>
                         </tr>
@@ -158,7 +158,7 @@ export const Categorias = () => {
                 </tbody>
             </table>
 
-           
+
             <div id="modalCategoria" className="modal fade" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div className="modal-dialog">
                     <div className="modal-content">
@@ -167,23 +167,29 @@ export const Categorias = () => {
                             <button id='btnCerrarModal' type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div className="modal-body">
-                                <div className="mb-3">
-                                    <label htmlFor="nombreCategoria" className="form-label">Nombre</label>
-                                    <input type="text" className="form-control" id="nombreCategoria" value={nombre} onChange={(e) => setNombre(e.target.value)} />
-                                </div>
-                                <div className="mb-3">
-                                    <label htmlFor="imageCategoria" className="form-label">Imagen</label>
-                                    <input type="text" className="form-control" id="imageCategoria" value={image} onChange={(e) => setImage(e.target.value)} />
-                                </div>
+                            <label htmlFor="nombreCategoria" className="form-label">Nombre</label>
+
+                            <div className='input-group mb-3'>
+                                <span className='input-group-text'><i className='fa-solid fa-user'></i></span>
+                                <input type="text" className="form-control" id="nombreCategoria" value={nombre} onChange={(e) => setNombre(e.target.value)} />
                             </div>
-                            <div className="modal-footer">
-                                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                <button type="button" className="btn btn-primary" onClick={validarCategoria}>{operacion === 1 ? 'Agregar' : 'Guardar Cambios'}</button>
+
+                            <label htmlFor="imageCategoria" className="form-label">Imagen</label>
+
+                            <div className='input-group mb-3'>
+                                <span className='input-group-text'><i className='fa-solid fa-image'></i></span>
+                                <input type="text" className="form-control" id="imageCategoria" value={image} onChange={(e) => setImage(e.target.value)} />
                             </div>
+
+                        </div>
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="button" className="btn btn-primary" onClick={validarCategoria}>{operacion === 1 ? 'Agregar' : 'Guardar Cambios'}</button>
                         </div>
                     </div>
                 </div>
             </div>
-        
+        </div>
+
     );
 };
